@@ -16,9 +16,9 @@ if __name__=='__main__':
     prices = []
     bond_types = []
     for row in df_excel.itertuples():
-        bond = Bond(row._4,row._1,row._5,row._9,row._6,row._7)
+        bond = Bond(row._4,row._1,row._5,row._6,row._9,row._7)
         prices.append(pricer(getattr(pricers, f'Pricer{bond.type}')(),bond)) 
         bond_types.append(bond.type)
     df_excel['priced'] = prices
     df_excel['types'] = bond_types
-    df_excel.to_excel('Base titres_from_template.xlsx', index=False) # pick same file to overwrite content , can use sheet_name= for a specific sheet in the file
+    df_excel.to_excel('Base titres_from_template2.xlsx', index=False) # pick same file to overwrite content , can use sheet_name= for a specific sheet in the file

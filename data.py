@@ -7,9 +7,9 @@ from utils import get_days_in_year
 @dataclass(slots=True)
 class Bond():
     """Bond dataclass. Holds all the useful properties to type the bond for the correct pricing algorithm"""
-    emission : str
-    dateValo : str
-    echeance : str
+    emission : datetime
+    dateValo : datetime
+    echeance : datetime
     facial : float
     ytm : float
     nominal : float
@@ -21,16 +21,16 @@ class Bond():
     
     def __post_init__(self) -> None:
         # set MRR Mi and leap
-        self.mrr = (datetime.strptime(self.echeance, '%Y-%m-%d') - datetime.strptime(self.dateValo, '%Y-%m-%d')).days
-        self.mi = (datetime.strptime(self.echeance, '%Y-%m-%d') - datetime.strptime(self.emission, '%Y-%m-%d')).days
+        self.mrr = (self.echeance - self.dateValo).days
+        self.mi = (self.echeance - self.emission).days
         self.leap = get_days_in_year(self.dateValo)
         # set dates
         delta =  relativedelta(years=1)
-        _ = datetime.strptime(self.echeance, '%Y-%m-%d')
+        _ = self.echeance
         dates = [_]
-        while _ > datetime.strptime(self.emission, '%Y-%m-%d'):
+        while _ > self.emission:
             _ -= delta
-            if _ > datetime.strptime(self.emission, '%Y-%m-%d'):
+            if _ > self.emission:
                 dates.append(_)
         self.dates = dates
         # Get type

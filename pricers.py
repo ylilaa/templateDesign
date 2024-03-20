@@ -19,9 +19,9 @@ class PricerB(PricerBase):
     """
     # A nettoyer
     def get_valo(self, bond : Bond) -> float:
-        emission =  datetime.strptime(bond.emission, '%Y-%m-%d')
-        echeance = datetime.strptime(bond.echeance, '%Y-%m-%d')
-        dateValo = datetime.strptime(bond.dateValo, '%Y-%m-%d') 
+        emission =  bond.emission
+        echeance = bond.echeance
+        dateValo = bond.dateValo 
         facial = bond.facial
         nominal = bond.nominal
         ytm = bond.ytm
@@ -33,7 +33,7 @@ class PricerB(PricerBase):
         dates = [d for d in dates if (d-emission).days>=365]
         df['dates'] = dates
         
-        # echeance = datetime.strptime(echeance_str, '%Y-%m-%d')
+        # echeance = echeance_str
         df['leap'] = df['dates'].apply(get_days_in_year)
         df.loc[0,'coupon'] = 100000 * facial * (df.loc[0,'dates']-emission).days / (df.loc[0,'leap'] * 100)
         for i in range(len(dates)-1):
@@ -63,9 +63,9 @@ class PricerC(PricerBase):
     """
     # A nettoyer
     def get_valo(self, bond : Bond) -> float:
-        emission =  datetime.strptime(bond.emission, '%Y-%m-%d')
-        echeance = datetime.strptime(bond.echeance, '%Y-%m-%d')
-        dateValo = datetime.strptime(bond.dateValo, '%Y-%m-%d') 
+        emission =  bond.emission
+        echeance = bond.echeance
+        dateValo = bond.dateValo 
         facial = bond.facial
         nominal = bond.nominal
         ytm = bond.ytm
@@ -77,7 +77,7 @@ class PricerC(PricerBase):
         dates = [d for d in dates if (d-emission).days>=365]
         df['dates'] = dates
         
-        # echeance = datetime.strptime(echeance_str, '%Y-%m-%d')
+        # echeance = echeance_str
         df['leap'] = df['dates'].apply(get_days_in_year)
         df.loc[0,'coupon'] = 100000 * facial * (df.loc[0,'dates']-emission).days / (df.loc[0,'leap'] * 100)
         for i in range(len(dates)-1):
